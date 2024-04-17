@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gerar PDF com JS</title>
+</head>
+
+<body>
+
+    <h1>Gerar PDF com JavaScript</h1>
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome"><br><br>
+    <label for="cpf">CPF:</label>
+    <input type="text" id="cpf"><br><br>
+    <label for="empresa">Nome da Empresa:</label>
+    <input type="text" id="empresa"><br><br>
+    <button onclick="gerarPdf()">Gerar PDF</button>
+
+    <h2>Contrato Gerado:</h2>
+    <textarea id="contrato" cols="50" rows="10"></textarea><br><br>
+    <a id="downloadLink" style="display:none">Baixar Contrato</a>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"
+        integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/"
+        crossorigin="anonymous"></script>
+
+        <script>
+            function gerarPdf()
+            {
+                // Instanciar o jsPDF
+                var doc = new jsPDF();
+                var nome = document.getElementById('nome').value;
+                var cpf = document.getElementById('cpf').value;
+                var empresa = document.getElementById('empresa').value;
+    
+                var contrato = `Contrato de Prestação de Serviços\n\nEu, ${nome}, portador do CPF ${cpf}, contrato com a empresa ${empresa}...\n\n`;
+                 // Criar um objeto Blob com o conteúdo do contrato
+                var blob = new Blob([contrato], { type: 'text/plain' });
+
+                    // Criar um link de download
+                var downloadLink = document.getElementById('downloadLink');
+                downloadLink.href = window.URL.createObjectURL(blob);
+                downloadLink.download = 'contrato.txt';
+                downloadLink.style.display = 'block'; // Mostrar o link de download 
+                // Texto que deve estar no PDF
+                doc.text('nilton - Gerar PDF com JavaScript!', 10, 10);
+
+                // Gerar PDF
+                doc.save('nilton.pdf');
+            }
+        </script>
+
+</body>
+
+</html>
